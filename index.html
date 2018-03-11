@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <title>Toasty McFuckYou</title>
+
+        <script>
+            var url = "ws://pi-drive.local:1447/";
+
+            var ws;
+
+            try {
+                ws = new WebSocket(url);
+            } catch(err) {
+                console.log(err.message);
+            }
+
+            $(document).ready(function() {
+                $("#forward").mousedown(function() {
+                    ws.send("f");
+                });
+                $("#backward").mousedown(function() {
+                    ws.send("b");
+                });
+                $("#left").mousedown(function() {
+                    ws.send("l");
+                });
+                $("#right").mousedown(function() {
+                    ws.send("r");
+                });
+                $("#steering button").mouseup(function() {
+                    ws.send("n");
+                });
+            });
+        </script>
+
+        <style>
+            #camera {
+                background: url(http://pi-camera.local:8080/?action=stream) no-repeat;
+                background-size: 640px 480px;
+                overflow: hidden;
+                width: 640;
+                height: 480;
+                margin: auto;
+            }
+            #steering {
+                text-align: center;
+                width: 100%;
+            }
+            #steering button {
+                text-align: center;
+                font-size: 1.5em;
+                padding: 10px 20px;
+                margin: 5px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="camera"></div>
+        <div id="steering">
+            <button id="forward">&#9650;</button>
+            <br>
+            <button id="left">&#9664;</button>
+            <button id="right">&#9654;</button>
+            <br>
+            <button id="backward">&#9660;</button>
+        </div>
+    </body>
+</html>
